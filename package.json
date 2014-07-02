@@ -1,0 +1,4 @@
+{
+    "name" : "coim_node",
+    "main" : "./coim.js"
+}
