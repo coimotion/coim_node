@@ -1,4 +1,4 @@
 {
     "name" : "coim_node",
-    "main" : "./coim.js"
+    "main" : "./lib/coim.js"
 }
