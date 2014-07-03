@@ -134,6 +134,7 @@ var  pwWorker = (function() {
 
     var  worker = function() {
         var  password = '',
+             display = '',
              worker = this;
 
         this.listenChar = function(c)  {
@@ -145,12 +146,15 @@ var  pwWorker = (function() {
             case "\u0004":
                 worker.callback( password );
                 break;
-
             default:
                 readline.moveCursor(process.stdin, -1, 0);
                 readline.clearLine(process.stdin, 1);
                 stdout.write('*');
-                password += c;
+                if (c.charCodeAt(0) === 127)
+                    password = password.substring(0, password.length - 1);
+                else
+                    password += c;
+
                 break;
             }
         };
