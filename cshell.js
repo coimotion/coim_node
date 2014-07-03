@@ -10,14 +10,16 @@
 coim.init();
 
 var  stdin = process.stdin,
-     stdout = process.stdout;
+     stdout = process.stdout,
+     promptWord = 'coim > ';
 
 var  rl = readline.createInterface({
     input: stdin,
     output: stdout
 });
 
-rl.setPrompt('coim > ', 7);
+stdin.setEncoding('utf8');
+rl.setPrompt(promptWord, promptWord.length);
 rl.prompt();
 
 
@@ -53,7 +55,6 @@ function commander(cmd) {
 function  doLogin()  {
     rl.question('Account Name: ', function(accName) {
         rl.removeListener('line', commander);
-        stdout.write('Password: ');
 
         var  worker = new pwWorker();
         worker.callback = function callback(passwd) {
@@ -62,6 +63,11 @@ function  doLogin()  {
 
             coim.login('core/user/login', {accName: accName, passwd: passwd}, function(result) {
                 console.log('[login]: %s\n', result.message );
+                rl.on('line', commander);
+                rl.prompt();
+            },
+            function(err) {
+                console.log('[login]: %s\n', err );
                 rl.on('line', commander);
                 rl.prompt();
             });
@@ -137,6 +143,10 @@ var  pwWorker = (function() {
              display = '',
              worker = this;
 
+        // some hacking to make bs work
+        rl.write('Password: ');
+        rl.setPrompt('', 0);
+
         this.listenChar = function(c)  {
             c = c + '';
 
@@ -144,17 +154,32 @@ var  pwWorker = (function() {
             case "\n":
             case "\r":
             case "\u0004":
+                // let's recover the prompt
+                rl.setPrompt(promptWord, promptWord.length);
+
                 worker.callback( password );
                 break;
-            default:
-                readline.moveCursor(process.stdin, -1, 0);
-                readline.clearLine(process.stdin, 1);
-                stdout.write('*');
-                if (c.charCodeAt(0) === 127)
-                    password = password.substring(0, password.length - 1);
-                else
-                    password += c;
 
+            default:
+                if (c.charCodeAt(0) === 127)  {
+                    if (password)  {
+                        password = password.substring(0, password.length - 1);
+
+                        var  plen = password.length;
+                        readline.moveCursor(process.stdin, -plen, 0);
+                        readline.clearLine(process.stdin, 1);
+                        for (var i = 0, len = password.length; i < len; i++)
+                            stdout.write('*');
+                    }
+                    else
+                        rl.write(' ');
+                }
+                else  {
+                    readline.moveCursor(process.stdin, -1, 0);
+                    readline.clearLine(process.stdin, 1);
+                    stdout.write('*');
+                    password += c;
+                }
                 break;
             }
         };
