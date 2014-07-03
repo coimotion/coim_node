@@ -1,4 +1,7 @@
 {
-    "name" : "coim_node",
-    "main" : "./coim.js"
+  "name": "coim_node",
+  "main": "./lib/coim.js",
+  "dependencies": {
+    "commander": "^2.2.0"
+  }
 }
