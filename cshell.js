@@ -1,6 +1,13 @@
-var  readline = require('readline'),
+/*!
+ * coServ
+ * authors: Ben Lue
+ * license: MIT
+ * Copyright(c) 2014 Gocharm Inc.
+ */
+ var readline = require('readline'),
      coim = require('./lib/coim');
 
+coim.init();
 
 var  stdin = process.stdin,
      stdout = process.stdout;
@@ -22,16 +29,22 @@ rl.on('line', commander).on('close', function() {
 function commander(cmd) {
     cmd = cmd.trim();
 
-    if (cmd === 'login')
+    switch (cmd)  {
+    case  'login':
         doLogin();
-    else  if (cmd === 'logout')
+        break;
+    case  'logout':
         doLogout();
-    else  if (cmd === 'send')
+        break;
+    case  'send':
         doSend();
-    else  if (cmd === 'exit')
+        break;
+    case  'exit':
         doExit();
-    else  {
-        console.log('Unknown command.');
+        break;
+    default:
+        if (cmd)
+            console.log('Unknown command.');
         rl.prompt();
     }
 };

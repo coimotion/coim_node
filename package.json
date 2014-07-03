@@ -1,7 +1,6 @@
 {
   "name": "coim_node",
-  "main": "./lib/coim.js",
-  "dependencies": {
-    "commander": "^2.2.0"
-  }
+  "version": "0.0.1",
+  "description": "A command line tool to interact with the COIMOTION API services."
+  "main": "./lib/coim.js"
 }
