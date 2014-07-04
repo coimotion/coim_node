@@ -160,24 +160,41 @@ var  pwWorker = (function() {
                 worker.callback( password );
                 break;
 
+            case "\u0008":
+                // windows goes here...
+                if (password)  {
+                    password = password.substring(0, password.length - 1);
+
+                    var  plen = password.length,
+                         outline = '';
+                    for (var i = 0; i < plen; i++)
+                        outline += '\b';
+                    for (var i = 0; i < plen; i++)
+                        outline += '*';
+                    stdout.write(outline);
+                }
+                else
+                    rl.write(' ');
+                break;
+
             default:
                 if (c.charCodeAt(0) === 127)  {
                     if (password)  {
                         password = password.substring(0, password.length - 1);
 
-                        var  plen = password.length;
-                        readline.moveCursor(process.stdin, -plen, 0);
-                        readline.clearLine(process.stdin, 1);
-                        for (var i = 0, len = password.length; i < len; i++)
-                            stdout.write('*');
+                        var  plen = password.length,
+                             outline = '';
+                        for (var i = 0; i < plen; i++)
+                            outline += '\b';
+                        for (var i = 0; i < plen; i++)
+                            outline += '*';
+                        stdout.write(outline);
                     }
                     else
                         rl.write(' ');
                 }
                 else  {
-                    readline.moveCursor(process.stdin, -1, 0);
-                    readline.clearLine(process.stdin, 1);
-                    stdout.write('*');
+                    stdout.write('\b*');
                     password += c;
                 }
                 break;
