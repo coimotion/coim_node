@@ -94,16 +94,8 @@ function  doSend() {
             params = params.trim();
             jstr += params;
 
-            if (params && params.charAt(params.length-1) === '}')  {
-                try  {
-                    params = JSON.parse(jstr);
-                    apiSend( apiPath, params );
-                }
-                catch (e)  {
-                    console.log('[send]: parameters should be a valid JSON object.\n');
-                    rl.prompt();
-                }
-            }
+            if (params && params.charAt(params.length-1) === '}')
+                queryAndSend(apiPath, jstr);
             else
                 rl.question('    ', listenC);
         };
@@ -112,8 +104,12 @@ function  doSend() {
             params = params.trim();
 
             if (params)  {
-                jstr = params;
-                rl.question('    ', listenC);
+                if (params.charAt(params.length-1) === '}')
+                    queryAndSend(apiPath, params);
+                else  {
+                    jstr = params;
+                    rl.question('    ', listenC);
+                }
             }
             else
                 apiSend( apiPath, null );
@@ -122,9 +118,26 @@ function  doSend() {
 };
 
 
+function  queryAndSend(apiPath, jstr)  {
+    rl.pause();
+    try  {
+        params = JSON.parse(jstr);
+        apiSend( apiPath, params );
+    }
+    catch (e)  {
+        console.log('[send]: parameters should be a valid JSON object.\n');
+        rl.prompt();
+    }
+};
+
+
 function  apiSend(apiPath, params)  {
     coim.send(apiPath, params, function(result) {
         console.log('[send]: results received as below:\n%s\n', JSON.stringify(result, null, 4));
+        rl.prompt();
+    },
+    function(err) {
+        console.log('[send]: error(s) occurred...\n%s\n', err);
         rl.prompt();
     });
 }
