@@ -1,4 +1,5 @@
 /.DS_Store
+/.config_local.json
 /node_modules
 /npm-debug.log
 /my_config.json
