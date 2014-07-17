@@ -140,7 +140,7 @@ function  apiSend(apiPath, params)  {
         console.log('[send]: error(s) occurred...\n%s\n', err);
         rl.prompt();
     });
-}
+};
 
 
 function  doExit()  {
