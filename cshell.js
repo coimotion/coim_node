@@ -5,7 +5,8 @@
  * Copyright(c) 2014 Gocharm Inc.
  */
  var readline = require('readline'),
-     coim = require('./lib/coim');
+     coim = require('./lib/coim'),
+     Repo = require('./lib/entity/Repo');
 
 coim.init();
 
@@ -27,6 +28,26 @@ rl.on('line', commander).on('close', function() {
     doExit();
 });
 
+// let's setup the entities
+(function() {
+    var  getRepo = Repo.getRepo,
+         future = {},
+         callback = function(err, myRepo) {
+             if (err)
+                 console.log('Error as: %s', JSON.stringify(err));
+             else {
+                 console.log('will set repo');
+                 console.log(JSON.stringify(myRepo));
+                 future.result = myRepo;
+             }
+         };
+
+    Repo.getRepo = function(repoCode) {
+        getRepo(repoCode, callback);
+        return  future;
+    };
+})();
+
 
 function commander(cmd) {
     cmd = cmd.trim();
@@ -45,8 +66,9 @@ function commander(cmd) {
         doExit();
         break;
     default:
-        if (cmd)
-            console.log('Unknown command.');
+        //if (cmd)
+        //    console.log('Unknown command.');
+        eval(cmd);
         rl.prompt();
     }
 };
