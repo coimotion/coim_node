@@ -29,6 +29,7 @@ rl.on('line', commander).on('close', function() {
 });
 
 // let's setup the entities
+/*
 (function() {
     var  getRepo = Repo.getRepo,
          future = {},
@@ -47,6 +48,7 @@ rl.on('line', commander).on('close', function() {
         return  future;
     };
 })();
+*/
 
 
 function commander(cmd) {
@@ -68,7 +70,12 @@ function commander(cmd) {
     default:
         //if (cmd)
         //    console.log('Unknown command.');
-        eval(cmd);
+        try  {
+            eval(cmd);
+        }
+        catch (e)  {
+            console.log(e);
+        }
         rl.prompt();
     }
 };

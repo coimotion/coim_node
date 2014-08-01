@@ -3,7 +3,12 @@
   "version": "0.0.5",
   "description": "A command line tool to interact with the COIMOTION API services.",
   "main": "./lib/coim.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/coimotion/coim_node.git"
+  },
   "dependencies": {
-    "async": "^0.9.0"
+    "async": "^0.9.0",
+    "bluebird": "^2.2.2"
   }
 }
