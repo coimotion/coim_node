@@ -1,8 +1,8 @@
 {
     "coim_app_code": "ben_lue",
     "coim_app_key": "a2a91ec4-25f5-bcd0-24cd-19578fb2da98",
-    "debug": false,
+    "debug": true,
     "ssl": true,
     "coim_accName": "ben.lue@gocharm.com.tw",
-    "token": "14525e039633773449c13d737f8b4026"
+    "token": "6eaf6b8c3d8f892f941144fb27efbc48"
 }
