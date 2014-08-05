@@ -28,28 +28,6 @@ rl.on('line', commander).on('close', function() {
     doExit();
 });
 
-// let's setup the entities
-/*
-(function() {
-    var  getRepo = Repo.getRepo,
-         future = {},
-         callback = function(err, myRepo) {
-             if (err)
-                 console.log('Error as: %s', JSON.stringify(err));
-             else {
-                 console.log('will set repo');
-                 console.log(JSON.stringify(myRepo));
-                 future.result = myRepo;
-             }
-         };
-
-    Repo.getRepo = function(repoCode) {
-        getRepo(repoCode, callback);
-        return  future;
-    };
-})();
-*/
-
 
 function commander(cmd) {
     cmd = cmd.trim();
