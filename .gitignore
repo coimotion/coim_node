@@ -1,7 +1,7 @@
 /.DS_Store
-/.config_local.json
+config_local.json
 /node_modules
 /npm-debug.log
 /my_config.json
-/test.js
-/testScript.txt
+test.js
+testScript.txt
