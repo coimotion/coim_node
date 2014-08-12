@@ -5,8 +5,7 @@
  * Copyright(c) 2014 Gocharm Inc.
  */
  var readline = require('readline'),
-     coim = require('./lib/coim'),
-     Repo = require('./lib/entity/Repo');
+     coim = require('./lib/coim');
 
 coim.init();
 

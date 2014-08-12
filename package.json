@@ -1,7 +1,7 @@
 {
   "name": "coim_node",
   "version": "0.1.0",
-  "description": "A command line tool to interact with the COIMOTION API services.",
+  "description": "COIMOTION SDK for node.js",
   "main": "./lib/coim.js",
   "repository": {
     "type": "git",

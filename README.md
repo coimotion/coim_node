@@ -5,7 +5,7 @@ This package actually has three parts: a SDK module for node.js, a command shell
 ## Install
 
     npm install coim_node
-    
+
 ## The SDK
 
 ### Setup
@@ -22,23 +22,23 @@ Once you've done the necessary setup, you can leverage the SDK to access all the
 First of all, require the SDK and initialize it as the following:
 
     var  coim = require('coim');
-    
+
     coim.init();
-    
+
 Once you've done that, you can use the coim methods to interact with the COIMOTION data store.
 
 ### Available Methods
 The coim object is a singleton, and it offers the following methods:
 
-+ **init()**: initializing the SDK
++ **init()** : initializing the SDK
 
-+ **attach(apiURL, params, files, success, fail, progress)**: trying to attach file(s) to a page. **apiURL** is the API path indicating the attach end point. **params** is an input parameter to specify additional information about the attached file. The possible property of the **params** object is 'title' which specifies the title of the attached file. Noted that if **params.dataURI** is given that dataURI will be used as the source of the attachment. In that case, the **files** parameters will be ingored. If **params.dataURI** is not given, the **files** parameter will be treated as an Javascript array with each element pointing to the source of the attached file. For example, ['/user/john/files/foo.png']. Since the **files** parameter is an array, the **attach()** method is capable of uploading multiple files at a time. In fact, you can upload up the three files at a time.
++ **attach(apiURL, params, files, success, fail, progress)** : trying to attach file(s) to a page. **apiURL** is the API path indicating the attach end point. **params** is an input parameter to specify additional information about the attached file. The possible property of the **params** object is 'title' which specifies the title of the attached file. Noted that if **params.dataURI** is given that dataURI will be used as the source of the attachment. In that case, the **files** parameters will be ingored. If **params.dataURI** is not given, the **files** parameter will be treated as an Javascript array with each element pointing to the source of the attached file. For example, ['/user/john/files/foo.png']. Since the **files** parameter is an array, the **attach()** method is capable of uploading multiple files at a time. In fact, you can upload up the three files at a time.
 
 + **getToken()**: returning the access token of the current user.
 
-+ **login(apiURL, params, success, fail)**: sending a login request.  **apiURL** is the API path indicating the login end point (which is 'core/user/login' for most cases). **params** is a parameter object with two properties: accName and passwd. **success(result)** is a callback function which will be invoked when the login request is successfully processed, otherwise the **fail(err)** callback function will be called.
++ **login(apiURL, params, success, fail)** : sending a login request.  **apiURL** is the API path indicating the login end point (which is 'core/user/login' for most cases). **params** is a parameter object with two properties: accName and passwd. **success(result)** is a callback function which will be invoked when the login request is successfully processed, otherwise the **fail(err)** callback function will be called.
 
-+ **logout(success, fail)**: logging out an user. **success(result)** is a callback function which will be invoked when the request is successfully processed, otherwise the **fail(err)** callback function will be called.
++ **logout(success, fail)** : logging out an user. **success(result)** is a callback function which will be invoked when the request is successfully processed, otherwise the **fail(err)** callback function will be called.
 
 + **register(params, success, fail)**: allowing an user to register him/herself with your app. The **params** parameter should at least containing three properties: accName, passwd and passwd2. It can contain more properties about an user. For more details about what information will be saved for an user, please refer to the 'core/user/register' API document (available on the COIMOTION website). **success(result)** is a callback function which will be invoked when the register request is successfully processed, otherwise the **fail(err)** callback function will be called.
 
@@ -66,7 +66,7 @@ You should see the 'coim' prompt:
 
     coim >
 
-Now you can enter commands just like you do with a Linux shell or Windows console. 
+Now you can enter commands just like you do with a Linux shell or Windows console.
 
 ### Commands
 At the current version, **cshell** offers four commands to play.
@@ -87,7 +87,7 @@ Most of the time, 'send' is the only command you need. When you type 'send' (and
     coim > send
     API: core/user/profile
     params:
-    
+
     [send]: results received as below:
     {
       "errCode": 0,
@@ -104,13 +104,13 @@ This command will exit the program.
 
 ## Remote Entities
 ------------------
-    
+
 Starting from release 0.1, we're experimenting with a high-level API called **Remote Entity API (REA)** which allows developers to access data stored in COIMOTION as entities. What this high-level API offers is that you don't have to send out API requests (which sometimes may not be very developer friendly) to load or update data anymore. Instead, you can treat every resource of a repository like a class and load resource data as instances (entities) of that class.
 
 Assuming you have a web reposiroty called 'BookStore' and that repository has a resource named 'book' which inherits its functions from the 'cms/page' resource, then you can play with the 'BookStore' repository with the following commands (using **cshell** ):
 
     1  > node cshell
-    2 
+    2
     3  coim > f = coim.getRepo('BookStore');
     4  coim > myRepo = f.result;
     5  coim > f = myRepo.findEntity('book', 108);
@@ -118,7 +118,7 @@ Assuming you have a web reposiroty called 'BookStore' and that repository has a 
     7  coim > console.log( JSON.stringify(book) );
     8  coim > book.title = 'A New Title';
     9  coim > book.save();
-    
+
 Line 1 starts the cshell tool. Line 3 gets a 'future' which is returned from the Repo.getRepo() function. A **future** is something similar to a 'promise'.  It can be returned from an asynchronous function call and its 'result' property will be filled with the execution result if the function is successfully executed. With that, assuming everything is fine and we can obtain the 'BookStore' repository in line 4.
 
 On line 5, we use the repository to find a book entity whose id # is 108. On line 6, we receive the book entity. We try to change its title on line 8 and make the change persistent on the COIMOTION data store on line 9 by calling the save() method.
@@ -191,7 +191,7 @@ Besides callback, both the Repo and Entity objects support the 'promise' coding 
 
     var  assert = require('assert'),
          coim = require('./lib/coim');
-    
+
     coim.init();
 
     var  params = {accName: 'foo@xxx', passwd: 'zzzz'};
@@ -210,7 +210,7 @@ Besides callback, both the Repo and Entity objects support the 'promise' coding 
     function(err) {
         console.log('Oops! Failed to login.')
     });
-    
+
     function  testRepoFind(myRepo)  {
         var  ngID = 35026;
 

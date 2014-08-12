@@ -19,9 +19,9 @@
 完成設定後，你可以用以下的 sample code 來載入和起始化 SDK:
 
     var  coim = require('coim');
-    
+
     coim.init();
-    
+
 接著你就可以在程式中，執行任何與 COIMOTION 相關的程式。
 
 ### SDK 的功能（函式）
@@ -45,7 +45,7 @@
 
 以上為 **coim_node** 所提供的基本功能。除此之外，**coim_node** 還提供了高階的介面，稱之為  **Remote Entity API (REA)**。關於 REA 下面的章節會有更多的介紹。目前先說明 **coim_node** 中所提供二個與 REA 相關的函式：
 
-+ **getRepo(WEB_REPO_CODE)** : 取得代碼為 'WEB_REPO_CODE' 的內容集（Repo 物件）。關於 Repo 物件，後面有更多的介紹。
++ **getRepo(WEB_REPO_CODE)** : 取得代碼為 'WEB_REPO_CODE' 的內容集（Repo 物件）。關於 Repo 物件，詳見後面的介紹。
 
 + **releaseRepo(repo)** : 釋放並清除 Repo 物件。Repo 物件一旦被釋放就不能再使用。
 
@@ -100,11 +100,11 @@
 ## Remote Entities
 ------------------
 從 0.1 版開始，COIMOTION 團隊試圖提供開發者更高階的程式開發介面，讓存取遠端服務就像存取本地物件一樣的方便。我們將這個高階的程式開發介面稱之為 **Remote Entity API (REA)**。利用 REA，開發者不再需要記憶冗長的 API 網址路徑。相反地，REA 協助開發者將遠端的資源 (resource) 視為一種類別 (class)，而資源下的實際資料則成為類別的實例 (instance)。
-  
+
 假設你在 COIMOTION 上有一個內容集稱為 'BookStore'，而該內容集下有一個繼承 'cms/page' 的資源成為 'book。那麼你可以用以下的方法來控制這個遠端的內容集：（你可以用 **cshell**來測試，不一定要先撰寫程式）
 
     1  > node cshell
-    2 
+    2
     3  coim > f = coim.getRepo('BookStore');
     4  coim > myRepo = f.result;
     5  coim > f = myRepo.findEntity('book', 108);
@@ -112,7 +112,7 @@
     7  coim > console.log( JSON.stringify(book) );
     8  coim > book.title = 'A New Title';
     9  coim > book.save();
-    
+
 第一行啟動 cshell 這個命令列工具，第三行則試圖取得 'BookStore' 這個內容集的連線內容。當執行 coim.getRepo() 時，REA 會立刻回傳一個稱為 future 的物件。有了這個 future 的物件，我們就不必用 callback。future 有點像 promise，當原有的函式執行完成時，執行節鬼會填入 future.result 中。利用這個原理，我們在第四行取得真正的 Repo 物件。
 
 在第五行，我們用剛剛取得的 Repo 物件來進一步取得識別碼為 108 號的這本書。同樣的，立刻回傳的是一個 future，我們在第六行透過這個 future 來取得實際的書本資料。在第七行，我們將這本書完整的資料列印到 console 中。
@@ -187,7 +187,7 @@ Repo 物件可以視為是遠端內容集在本地端的分身，而 Entity 物�
 
     var  assert = require('assert'),
          coim = require('./lib/coim');
-    
+
     coim.init();
 
     var  params = {accName: 'foo@xxx', passwd: 'zzzz'};
@@ -206,7 +206,7 @@ Repo 物件可以視為是遠端內容集在本地端的分身，而 Entity 物�
     function(err) {
         console.log('Oops! Failed to login.')
     });
-    
+
     function  testRepoFind(myRepo)  {
         var  ngID = 35026;
 
