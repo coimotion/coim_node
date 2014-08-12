@@ -22,9 +22,9 @@ function(err) {
 
 
 function  testSuite(myRepo)  {
+
     testRepoList(myRepo);
     testRepoFind(myRepo);
-    /*
     testCreateDel(myRepo);
     testSavePage(myRepo);
     testSaveGeo(myRepo);
@@ -38,7 +38,7 @@ function  testSuite(myRepo)  {
     testPageGeoInfo(myRepo);
     testPageGeoSave(myRepo);
     testPageGeoTag(myRepo);
-
+    /*
     testGeoPageCreateDel(myRepo);
     testGeoPageInfo(myRepo);
     testGeoPageSave(myRepo);
@@ -167,6 +167,7 @@ function  testPageAttach(myRepo)  {
 
     myRepo.findEntyAsync('myPage', ngID).then( function(page) {
         page.attachAsync({title: 'page attachment', nType:2}, [file]).then( function(rtnData) {
+            console.log()
             var  cnID = rtnData.value.id;
             page.detachAsync(cnID).then( function(rtnData) {
                 page.listAuxAsync(2).then( function(rtnData) {

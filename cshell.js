@@ -45,8 +45,6 @@ function commander(cmd) {
         doExit();
         break;
     default:
-        //if (cmd)
-        //    console.log('Unknown command.');
         try  {
             eval(cmd);
         }
