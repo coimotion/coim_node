@@ -1,17 +1,16 @@
 var  assert = require('assert'),
-     coim = require('./lib/coim'),
-     PageEnty = require('./lib/entity/PageEnty'),
-     Repo = require('./lib/entity/Repo');
+     coim = require('./lib/coim');
 
 coim.init();
 
 
 coim.login('core/user/login', {accName: 'ben.lue@gocharm.com.tw', passwd: '000000'}, function(result) {
     if (result.errCode === 0)  {
-        Repo.getRepoAsync('ben_lue').then(function(myRepo) {
-            testSuite(myRepo);
-        }).catch(function(err) {
-            console.log('Error as: %s', JSON.stringify(err));
+        coim.getRepo('ben_lue', function(err, myRepo) {
+            if (err)
+                console.log('Error as: %s', JSON.stringify(err));
+            else
+                testSuite(myRepo);
         });
     }
     else
@@ -25,6 +24,7 @@ function(err) {
 function  testSuite(myRepo)  {
     testRepoList(myRepo);
     testRepoFind(myRepo);
+    /*
     testCreateDel(myRepo);
     testSavePage(myRepo);
     testSaveGeo(myRepo);
@@ -44,7 +44,7 @@ function  testSuite(myRepo)  {
     testGeoPageSave(myRepo);
     testGeoPageTag(myRepo);
     testGeoPageListAux(myRepo);
-
+    */
     // conflicts: due to async execution, the following test cases would conflict with others
     //testPageListAux(myRepo);        // this test case conflicts with thisPageAttach();
     //testGeoPageAttach(myRepo);    // this test case conflicts with testGeoPageListAux();
@@ -168,7 +168,7 @@ function  testPageAttach(myRepo)  {
     myRepo.findEntyAsync('myPage', ngID).then( function(page) {
         page.attachAsync({title: 'page attachment', nType:2}, [file]).then( function(rtnData) {
             var  cnID = rtnData.value.id;
-            page.unattachAsync(cnID).then( function(rtnData) {
+            page.detachAsync(cnID).then( function(rtnData) {
                 page.listAuxAsync(2).then( function(rtnData) {
                     assert.strictEqual( rtnData.list.length, 0, 'No attachment file.');
                 });
@@ -407,7 +407,7 @@ function  testGeoPageAttach(myRepo)  {
         geo.findPageAsync(ngID).then( function(page) {
             page.attachAsync({title: 'sub-page attachment', nType:2}, [file]).then( function(rtnData) {
                 var  cnID = rtnData.value.id;
-                page.unattachAsync(cnID).then( function(rtnData) {
+                page.detachAsync(cnID).then( function(rtnData) {
                     page.listAuxAsync(2).then( function(rtnData) {
                         assert.strictEqual( rtnData.list.length, 0, 'No attachment file.');
                     });

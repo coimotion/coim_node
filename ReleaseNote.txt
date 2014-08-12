@@ -1,0 +1,5 @@
+0.1.0
+-----
+    . Published the Remote Entity APIs (REA) as a high-level interface to work with the remmote COIMTION services.
+    . Provided much more detailed documents.
+    . Fixed bugs in file uploads.
