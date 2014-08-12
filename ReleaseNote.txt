@@ -3,3 +3,5 @@
     . Published the Remote Entity APIs (REA) as a high-level interface to work with the remmote COIMTION services.
     . Provided much more detailed documents.
     . Fixed bugs in file uploads.
+    . Fixed a bug which would fail API calls when provided with unicoded parameters.
+    . Tagging was not taking a Javascript array as the input parameter. Fixed.
