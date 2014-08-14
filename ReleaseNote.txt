@@ -1,3 +1,7 @@
+0.1.1
+-----
+    . Fixed a potential memory leask problem when launch large amount of requests simultaneously.
+
 0.1.0
 -----
     . Published the Remote Entity APIs (REA) as a high-level interface to work with the remmote COIMTION services.
